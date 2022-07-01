@@ -1,15 +1,29 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Recipe Box
 
-Things you may want to cover:
+This is a refreshed version of a project that I built a while ago. It's still in development, but here are some features that I will be creating:
 
-* Ruby version
+- [ ] A user profile to view created recipes, favorited recipes, and followers
+- [ ] A dashboard for users to manage their personal information and view messages
+- [ ] Follow and favorite system
+- [ ] Rating and commenting system
+- [ ] Ability to create and edit recipes, including image (and possibly video) uploads
 
-* System dependencies
+## Tech Stack
 
-* Configuration
+- ### **Ruby version** - 3.1.2
+- ### **Rails version** - 7.0.3
+
+- TailwindCSS
+- PostgreSQL
+- Devise
+- ActiveStorage
+- S3
+- Hotwire
+- Stimulus
+
+<!-- * Configuration
 
 * Database creation
 
@@ -21,4 +35,4 @@ Things you may want to cover:
 
 * Deployment instructions
 
-* ...
+* ... -->
