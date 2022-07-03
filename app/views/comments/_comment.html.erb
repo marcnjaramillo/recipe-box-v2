@@ -1,7 +1,18 @@
-<div id="<%= dom_id comment %>">
-  <% if action_name != "show" %>
-    <%= link_to "Show this comment", comment, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-    <%= link_to 'Edit this comment', edit_comment_path(comment), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
-    <hr class="mt-6">
-  <% end %>
-</div>
+<%= turbo_stream_from comment %>
+
+<%= turbo_frame_tag comment, target: "_top" do %>
+  <div class="d-flex justify-content-between">
+    <div>
+    <% if comment.parent.nil? %>
+      <strong><%= link_to comment.user.first_name, user_path(comment.user.id) %></strong>
+    <% else %>
+      <strong><%= link_to comment.user.first_name, user_path(comment.user.id) %></strong> replied to <strong><%= link_to comment.parent&.user&.first_name, user_path(comment.parent&.user&.id) %></strong>:
+    <% end %>
+    </div>
+    <div class="protected-links d-none" data-user-id="<%= comment.user_id %>">
+      <%= link_to "Edit", edit_comment_path(comment), class: "mr-2" %>
+      <%= button_to "Delete", comment_path(comment), method: :delete, data: { confirm: "Are you sure?" } %>
+    </div>
+  </div>
+  <%= comment.body %>
+<% end %>
