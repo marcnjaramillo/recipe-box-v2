@@ -1,15 +1,48 @@
-<div class="mx-auto md:w-2/3 w-full flex">
-  <div class="mx-auto">
-    <% if notice.present? %>
-      <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
-    <% end %>
-
-    <%= render @recipe %>
-
-    <%= link_to 'Edit this recipe', edit_recipe_path(@recipe), class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-    <div class="inline-block ml-2">
-      <%= button_to 'Destroy this recipe', recipe_path(@recipe), method: :delete, class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 font-medium" %>
+<section class="container" data-controller="protected" data-protected-refresh-interval-value="10">
+  <div class="row">
+    <div class="col col-md-8">
+      <%= recipe_image @recipe %>
+      <h4 class="recipe-creator"> Recipe by: <%= link_to @recipe.user.first_name, profile_path(@recipe.user), id: "user" %></h4>
+      <h1 class="recipe-header">
+        <%= @recipe.name.split.map(&:capitalize).join(' ') %>
+      </h1>
+      <div class="recipe-info">
+        <p>Category: <strong><%= @recipe.category %></strong></p>
+        <p>Prep: <strong><%= @recipe.prep_time %> min</strong></p>
+        <p>Cook: <strong><%= @recipe.cook_time %> min</strong></p>
+      </div>
+      <div class="recipe-details">
+        <section class="ingredients">
+          <h2>Ingredients</h2>
+          <ul id="ingredients-list">
+            <% @recipe.recipe_ingredients.each do |ri| %>
+              <li class="ingredients"><%= ri.quantity %> <%= ri.ingredient.name %> </li>
+            <% end %>
+          </ul>
+        </section>
+        <section class="directions">
+          <h2>Directions</h2>
+          <p><%= @recipe.directions %></p>
+        </section>
+      </div>
+      <h4>Comments</h4>
+      <% if user_signed_in? %>
+        <%= render partial: "comments/form", locals: { comment: Comment.new, commentable: @recipe } %>
+      <% else %>
+        <%= link_to "Sign up", new_user_registration_path %> or <%= link_to "login", new_user_session_path %> to comment
+      <% end %>
+      <%= turbo_stream_from @recipe, :comments %>
+      <%= tag.div id: "#{dom_id(@recipe)}_comments" do %>
+        <%= render partial: "comments/comment_with_replies", collection: @recipe.comments.where(parent_id: nil), as: :comment %>
+      <% end %>
+      <% if user_signed_in? && current_user.id == @recipe.user_id %>
+        <%= link_to "Edit Recipe", edit_recipe_path, class: "btn btn-sm btn-info" %>
+        <%= link_to "Delete Recipe", recipe_path, method: :delete, class: "btn btn-sm btn-danger" %>
+      <% end %>
+      <%= link_to "Recipes Home", recipes_path, class: "btn btn-sm btn-secondary" %>
     </div>
-    <%= link_to 'Back to recipes', recipes_path, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+    <div class="col-md-4">
+      <h2>Check out these other recipes</h2>
+    </div>
   </div>
-</div>
+</section>

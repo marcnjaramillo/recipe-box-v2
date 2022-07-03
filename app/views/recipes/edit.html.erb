@@ -1,8 +1,3 @@
-<div class="mx-auto md:w-2/3 w-full">
-  <h1 class="font-bold text-4xl">Editing recipe</h1>
-
-  <%= render "form", recipe: @recipe %>
-
-  <%= link_to "Show this recipe", @recipe, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-  <%= link_to "Back to recipes", recipes_path, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-</div>
+<h1>Edit Your Recipe</h1>
+<%= render "form", recipe: @recipe, submit_btn: "Update" %>
+<%= link_to "Cancel", recipe_path(@recipe), class: "btn btn-danger" %>
