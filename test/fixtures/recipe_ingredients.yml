@@ -1,11 +1,29 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 # This model initially had no columns defined. If you add columns to the
-# model remove the "{}" from the fixture names and add the columns immediately
+# model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one: {}
-# column: value
-#
-two: {}
-# column: value
+rec_ing1:
+  id: 1
+  quantity: 1 pinch
+  recipe_id: 1
+  ingredient_id: 1
+
+rec_ing2:
+  id: 2
+  quantity: 1 dash
+  recipe_id: 1
+  ingredient_id: 4
+
+rec_ing3:
+  id: 3
+  quantity: a hint
+  recipe_id: 2
+  ingredient_id: 2
+
+rec_ing4:
+  id: 4
+  quantity: a skosh
+  recipe_id: 2
+  ingredient_id: 3
