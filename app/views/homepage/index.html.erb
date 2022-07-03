@@ -1,0 +1,25 @@
+<header>
+  <div class="row">
+    <section id="home-heading">
+      <figure>
+        <%= image_tag "cooking-banner.jpg", class: "hero-image img-fluid", alt: "cutting board and bowls on wooden table" %>
+      </figure>
+    </section>
+  </div>
+</header>
+<main>
+  <section class="row">
+    <% @recipes.each do |recipe| %>
+      <div class="col-6 col-md-4">
+        <div class="card">
+          <%= link_to recipe_path(recipe), "data-turbo-frame": "_top" do  %>
+            <%= recipe_thumbnail recipe %>
+          <% end %>
+          <div class="card-body">
+            <h5 class="card-title"><%= recipe.name.titleize %></h5>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </section>
+</main>
