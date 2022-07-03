@@ -1,13 +1,18 @@
 Rails.application.routes.draw do
-  resources :relationships
   resources :likes
   resources :comments
-  resources :recipe_ingredients
-  resources :ingredients
   resources :recipes
   devise_for :users
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+
+  resources :profile, param: :username, only: [:show] do
+    member do
+      get :recipes, :following, :followers
+    end
+  end
+
+  post 'profile/follow', to: 'profile#follow'
+  delete 'profile/unfollow', to: 'profile#unfollow'
 
   # Defines the root path route ("/")
-  root "static#homepage"
+  root "homepage#index"
 end
