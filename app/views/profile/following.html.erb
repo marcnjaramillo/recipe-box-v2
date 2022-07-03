@@ -1,0 +1,25 @@
+<%= turbo_frame_tag @user do %>
+  <div class="stats">
+    <span> <%= link_to "Recipes", recipes_profile_path(@user), collection: @user.recipes %></span>
+    <span> <%= link_to "Followers", followers_profile_path(@user), collection: @user.followers %></span>
+    <span class="current"> <%= link_to "Following", following_profile_path(@user), collection: @user.following %></span>
+  </div>
+  <% if @user.following.empty? %>
+    <div class="no-stats">
+      <p>Not following anyone yet.</p>
+    </div>
+  <% else %>
+    <% @user.following.each do |following| %>
+      <div class="row">
+        <div class="col-4 col-md-4 profile-follow">
+          <%= link_to user_path(following.username), "data-turbo-frame": "_top" do  %>
+            <div class="follow">
+              <%= follow_image following %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% end %>
+<% end %>

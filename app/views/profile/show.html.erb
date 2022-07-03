@@ -1,0 +1,33 @@
+<header>
+  <div class="row profile-header">
+    <div class="col-6 col-md-3 profile-image">
+      <%= profile_image @user %>
+    </div>
+    <div class="col-6 col-md-9 text-left">
+      <div class="row">
+        <h1 class="float-left"><%= @user.fullname %></h1>
+      </div>
+      <div class="row">
+        <p>Joined <%= @user.created_at.strftime("%B %d, %Y") %></p>
+      </div>
+      <% if user_signed_in? && current_user.id != @user.id %>
+        <div class="row">
+          <%= render 'profile/follow_button', user: user %>
+        </div>
+      <% elsif can_edit_profile?(@user.id) %>
+        <div class="row">
+          <%= link_to "Edit Profile", edit_user_registration_path, class: "btn btn-secondary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</header>
+<main>
+  <%= turbo_frame_tag @user, src: recipes_profile_path(@user) do %>
+    <div class="stats">
+      <span> <%= link_to "Recipes", recipes_profile_path(@user), collection: @user.recipes %></span>
+      <span> <%= link_to "Followers", followers_profile_path(@user), collection: @user.followers %></span>
+      <span> <%= link_to "Following", following_profile_path(@user), collection: @user.following %></span>
+    </div>
+  <% end %>
+</main>

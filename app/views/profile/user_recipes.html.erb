@@ -1,0 +1,28 @@
+<%= turbo_frame_tag @user do %>
+  <div class="stats">
+    <span class="current"> <%= link_to "Recipes", recipes_profile_path(@user), collection: @user.recipes %></span>
+    <span> <%= link_to "Followers", followers_profile_path(@user), collection: @user.followers %></span>
+    <span> <%= link_to "Following", following_profile_path(@user), collection: @user.following %></span>
+  </div>
+  <% if @user.recipes.empty? %>
+    <div class="no-stats">
+      <p>No recipes to display.</p>
+    </div>
+  <% else %>
+    <div class="row profile-recipes">
+      <% @user.recipes.each do |recipe| %>
+        <div class="col-6 col-md-4">
+          <div class="card">
+            <%= link_to recipe_path(recipe), "data-turbo-frame": "_top" do  %>
+              <%= recipe_thumbnail recipe %>
+            <% end %>
+            <div class="card-body">
+              <h5 class="card-title"><%= recipe.name.titleize %></h5>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>
