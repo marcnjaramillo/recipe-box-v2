@@ -6,6 +6,6 @@ module RecipesHelper
 
   def recipe_thumbnail recipe
     image = recipe.image.present? ? recipe.image : "https://via.placeholder.com/500x500.png?text=No+image+to+display"
-    image_tag(image, class: "recipe-thumbnail img-fluid img-thumbnail")
+    image_tag(image, class: "object-cover pointer-events-none group-hover:opacity-75")
   end
 end

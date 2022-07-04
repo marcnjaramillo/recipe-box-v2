@@ -11,7 +11,12 @@ module ProfileHelper
 
   def profile_image user
     image = user.profile_image.present? ? user.profile_image : "default.png"
-    image_tag(image, class: "profile-pic m-r-10")
+    image_tag(image, class: "h-20 w-20 rounded-full")
+  end
+
+  def profile_image_thumb user
+    image = user.profile_image.present? ? user.profile_image : "default.png"
+    image_tag(image, class: "h-8 w-8 rounded-full")
   end
 
   def follow_image user
