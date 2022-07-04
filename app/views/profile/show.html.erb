@@ -1,33 +1,53 @@
-<header>
-  <div class="row profile-header">
-    <div class="col-6 col-md-3 profile-image">
-      <%= profile_image @user %>
-    </div>
-    <div class="col-6 col-md-9 text-left">
-      <div class="row">
-        <h1 class="float-left"><%= @user.fullname %></h1>
-      </div>
-      <div class="row">
-        <p>Joined <%= @user.created_at.strftime("%B %d, %Y") %></p>
-      </div>
-      <% if user_signed_in? && current_user.id != @user.id %>
-        <div class="row">
-          <%= render 'profile/follow_button', user: user %>
+<div class="w-full min-h-full">
+  <main class="pb-8">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:max-w-7xl lg:px-8">
+      <h1 class="sr-only">Profile</h1>
+      <!-- Main 3 column grid -->
+      <div class="grid grid-cols-1 gap-4 items-start lg:grid-cols-2 lg:gap-8">
+        <!-- Left column -->
+        <div class="grid grid-cols-1 gap-4 lg:col-span-2">
+          <!-- Welcome panel -->
+          <section aria-labelledby="profile-overview-title">
+            <div class="rounded-lg bg-white overflow-hidden shadow">
+              <h2 class="sr-only" id="profile-overview-title">Profile Overview</h2>
+              <div class="bg-white p-6">
+                <div class="sm:flex sm:items-center sm:justify-between">
+                  <div class="sm:flex sm:space-x-5">
+                    <div class="flex-shrink-0">
+                      <%= profile_image @user %>
+                    </div>
+                    <div class="mt-4 text-center sm:mt-0 sm:pt-1 sm:text-left">
+                      <% if can_edit_profile?(@user.id) %>
+                        <p class="text-sm font-medium text-gray-600">Welcome back,</p>
+                      <% end %>
+                      <p class="text-xl font-bold text-gray-900 sm:text-2xl"><%= @user.fullname %></p>
+                      <p>Joined <%= @user.created_at.strftime("%B %d, %Y") %></p>
+                      <%# <p class="text-sm font-medium text-gray-600">Human Resources Manager</p> %>
+                    </div>
+                  </div>
+                  <div class="mt-5 flex justify-center sm:mt-0">
+                    <% if user_signed_in? && current_user.id != @user.id %>
+                      <%= render 'profile/follow_button', user: user %>
+                    <% elsif can_edit_profile?(@user.id) %>
+                      <%= link_to "Edit Profile", edit_user_registration_path, class: "flex justify-center items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50" %>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <!-- Actions panel -->
+          <section class="mt-8">
+            <%= turbo_frame_tag @user, src: recipes_profile_path(@user) do %>
+              <div class="relative z-0 rounded-lg shadow flex divide-x divide-gray-200">
+                <span> <%= link_to "Recipes", recipes_profile_path(@user), collection: @user.recipes %></span>
+                <span> <%= link_to "Followers", followers_profile_path(@user), collection: @user.followers %></span>
+                <span> <%= link_to "Following", following_profile_path(@user), collection: @user.following %></span>
+              </div>
+            <% end %>
+          </section>
         </div>
-      <% elsif can_edit_profile?(@user.id) %>
-        <div class="row">
-          <%= link_to "Edit Profile", edit_user_registration_path, class: "btn btn-secondary" %>
-        </div>
-      <% end %>
+      </div>
     </div>
-  </div>
-</header>
-<main>
-  <%= turbo_frame_tag @user, src: recipes_profile_path(@user) do %>
-    <div class="stats">
-      <span> <%= link_to "Recipes", recipes_profile_path(@user), collection: @user.recipes %></span>
-      <span> <%= link_to "Followers", followers_profile_path(@user), collection: @user.followers %></span>
-      <span> <%= link_to "Following", following_profile_path(@user), collection: @user.following %></span>
-    </div>
-  <% end %>
-</main>
+  </main>
+</div>

@@ -1,25 +1,43 @@
 <%= turbo_frame_tag @user do %>
-  <div class="stats">
-    <span> <%= link_to "Recipes", recipes_profile_path(@user), collection: @user.recipes %></span>
-    <span class="current"> <%= link_to "Followers", followers_profile_path(@user), collection: @user.followers %></span>
-    <span> <%= link_to "Following", following_profile_path(@user), collection: @user.following %></span>
+  <div class="relative z-0 rounded-lg shadow flex divide-x divide-gray-200">
+    <%= link_to recipes_profile_path(@user), class: "text-gray-500 hover:text-gray-700 group relative min-w-0 flex-1 overflow-hidden bg-white py-4 px-6 text-sm font-medium text-center hover:bg-gray-50 focus:z-10", collection: @user.recipes do %>
+      <span> Recipes </span>
+      <span aria-hidden="true" class="bg-transparent absolute inset-x-0 bottom-0 h-0.5"></span>
+    <% end %>
+    <%= link_to followers_profile_path(@user), class: "text-gray-900 rounded-l-lg group relative min-w-0 flex-1 overflow-hidden bg-white py-4 px-6 text-sm font-medium text-center hover:bg-gray-50 focus:z-10", collection: @user.followers do %>
+      <span> Followers </span>
+      <span aria-hidden="true" class="bg-rose-500 absolute inset-x-0 bottom-0 h-0.5"></span>
+    <% end %>
+    <%= link_to following_profile_path(@user), class: "text-gray-500 hover:text-gray-700 group relative min-w-0 flex-1 overflow-hidden bg-white py-4 px-6 text-sm font-medium text-center hover:bg-gray-50 focus:z-10", collection: @user.following do %>
+      <span> Following </span>
+      <span aria-hidden="true" class="bg-transparent absolute inset-x-0 bottom-0 h-0.5"></span>
+    <% end %>
   </div>
-  <% if @user.followers.empty? %>
-    <div class="no-stats">
+  <% if @user.following.empty? %>
+    <div class="text-xl text-center mt-8">
       <p>No followers yet.</p>
     </div>
   <% else %>
-    <% @user.followers.each do |follower| %>
-      <div class="row">
-        <div class="col-4 col-md-4 profile-follow">
-          <%= link_to user_path(follower.username), "data-turbo-frame": "_top" do  %>
-            <div class="follow">
-              <%= follow_image follower %>
+    <ul role="list" class="-my-4 divide-y divide-gray-200">
+      <% @user.following.each do |following| %>
+        <li class="flex items-center py-4 space-x-3">
+          <div class="flex-shrink-0">
+            <%= follow_image following %>
+          </div>
+          <div class="min-w-0 flex-1">
+            <p class="text-sm font-medium text-gray-900">
+              <%= following.fullname %>
+            </p>
+          </div>
+          <%= link_to user_path(following.username), "data-turbo-frame": "_top" do  %>
+            <div class="flex-shrink-0">
+              <div type="button" class="inline-flex items-center shadow-sm px-2.5 py-0.5 border border-gray-300 text-sm leading-5 font-medium rounded-full text-gray-700 bg-white hover:bg-gray-50">
+                <span> View Profile </span>
+              </div>
             </div>
           <% end %>
-        </div>
-      </div>
-    </div>
+        </li>
+      <% end %>
+    </ul>
   <% end %>
-<% end %>
 <% end %>
