@@ -98,10 +98,10 @@
               <div class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none divide-y" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
                 <div>
                   <%= link_to profile_path(current_user) do %>
-                    <span class="<%=profile_nav_active("/profile/#{current_user.username}")%> block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-cyan-700">Your Profile</span>
+                    <span class="<%=profile_nav_active("/profile/#{current_user.username}")%> block px-3 py-2 rounded-md text-base font-medium hover:text-white hover:bg-cyan-700">Your Profile</span>
                   <% end %>
                   <%= link_to new_recipe_path do %>
-                    <span class="<%=profile_nav_active('/recipes/new')%> block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-cyan-700">New Recipe</span>
+                    <span class="<%=profile_nav_active('/recipes/new')%> block px-3 py-2 rounded-md text-base font-medium hover:text-white hover:bg-cyan-700">New Recipe</span>
                   <% end %>
                 </div>
                 <div>
@@ -143,10 +143,10 @@
         <div class="mt-3 px-2 space-y-1 divide-y">
           <div>
             <%= link_to profile_path(current_user) do %>
-              <span class="<%=profile_nav_active("/profile/#{current_user.username}")%> block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-cyan-700">Your Profile</span>
+              <span class="<%=profile_nav_active("/profile/#{current_user.username}")%> block px-3 py-2 rounded-md text-base font-medium hover:text-white hover:bg-cyan-700">Your Profile</span>
             <% end %>
             <%= link_to new_recipe_path do %>
-              <span class="<%=profile_nav_active('/recipes/new')%> block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-cyan-700">New Recipe</span>
+              <span class="<%=profile_nav_active('/recipes/new')%> block px-3 py-2 rounded-md text-base font-medium hover:text-white hover:bg-cyan-700">New Recipe</span>
             <% end %>
           </div>
           <div>
