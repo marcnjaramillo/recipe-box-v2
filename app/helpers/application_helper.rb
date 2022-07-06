@@ -4,7 +4,7 @@ module ApplicationHelper
   end
 
   def profile_nav_active(path)       
-    request.path == path ? 'bg-cyan-200' : ''     
+    request.path == path ? 'bg-cyan-600 text-white' : 'text-gray-400'     
   end
 
   def nested_active(controller)       
