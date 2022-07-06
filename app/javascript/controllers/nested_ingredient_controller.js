@@ -6,12 +6,10 @@ export default class extends Controller {
   connect() {
     this.wrapperClass =
       this.data.get('wrapperClass') || 'nested-ingredient-fields';
-    console.log(this.wrapperClass);
   }
 
   add_association(event) {
     event.preventDefault();
-    console.log('clicked');
     var content = this.templateTarget.innerHTML.replace(
       /NEW_RECORD/g,
       new Date().getTime()
@@ -21,9 +19,7 @@ export default class extends Controller {
 
   remove_association(event) {
     event.preventDefault();
-
     let wrapper = event.target.closest('.' + this.wrapperClass);
-    console.log(wrapper.dataset.newRecord);
 
     // New records are simply removed from the page
     if (wrapper.dataset.newRecord == 'true') {
