@@ -7,7 +7,9 @@
         <%= @recipe.name.split.map(&:capitalize).join(' ') %>
       </h1>
       <div class="recipe-info">
+        <p><%= @recipe.cuisine.capitalize %></p>
         <p>Category: <strong><%= @recipe.category %></strong></p>
+        <p>Difficulty: <strong><%= @recipe.difficulty %></strong></p>
         <p>Prep: <strong><%= @recipe.prep_time %> min</strong></p>
         <p>Cook: <strong><%= @recipe.cook_time %> min</strong></p>
       </div>
@@ -25,16 +27,6 @@
           <p><%= @recipe.directions %></p>
         </section>
       </div>
-      <h4>Comments</h4>
-      <% if user_signed_in? %>
-        <%= render partial: "comments/form", locals: { comment: Comment.new, commentable: @recipe } %>
-      <% else %>
-        <%= link_to "Sign up", new_user_registration_path %> or <%= link_to "login", new_user_session_path %> to comment
-      <% end %>
-      <%= turbo_stream_from @recipe, :comments %>
-      <%= tag.div id: "#{dom_id(@recipe)}_comments" do %>
-        <%= render partial: "comments/comment_with_replies", collection: @recipe.comments.where(parent_id: nil), as: :comment %>
-      <% end %>
       <% if user_signed_in? && current_user.id == @recipe.user_id %>
         <%= link_to "Edit Recipe", edit_recipe_path, class: "btn btn-sm btn-info" %>
         <%= link_to "Delete Recipe", recipe_path, method: :delete, class: "btn btn-sm btn-danger" %>

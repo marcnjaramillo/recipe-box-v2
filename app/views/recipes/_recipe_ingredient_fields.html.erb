@@ -1,14 +1,21 @@
 <%= content_tag :div, class: "nested-ingredient-fields", data: { new_record: form.object.new_record? } do %>
-  <div class="form-inline">
-    <div class="form-group">
-      <%= form.text_field(:quantity, class: "form-control w-40", placeholder: "Quantity") %>
-
-      <%= form.fields_for :ingredient, Ingredient.new do |ri_ingredient| %>
-      <%= ri_ingredient.text_field(:name, class: "form-control w-40", placeholder: "Ingredient Name") %>
-      <%= form.hidden_field :ingredient_id, as: :hidden %>
-      <% end %>
-      <%= link_to "Remove", "#", data: { action: "click->nested-form#remove_association" } %>
+  <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6 w-[50vw]">
+    <div class="sm:col-span-3">
+      <%= form.label :quantity, class: "block text-sm font-medium text-gray-700" %>
+      <div class="mt-1">
+        <%= form.text_field(:quantity, class: "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md") %>
+      </div>
     </div>
+    <%= form.fields_for :ingredient, Ingredient.new do |ri_ingredient| %>
+      <div class="sm:col-span-3">
+        <%= form.label :ingredient, class: "block text-sm font-medium text-gray-700" %>
+        <div class="mt-1">
+          <%= ri_ingredient.text_field(:name, class: "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md") %>
+          <%= form.hidden_field :ingredient_id, as: :hidden %>
+        </div>
+      </div>
+    <% end %>
+    <%= link_to "Remove", "#", class: "bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm text-center font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500", data: { action: "click->nested-ingredient#remove_association" } %>
+    <%= form.hidden_field :_destroy, as: :hidden %>
   </div>
-  <%= form.hidden_field :_destroy, as: :hidden %>
 <% end %>
