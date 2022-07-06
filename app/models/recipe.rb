@@ -12,4 +12,8 @@ class Recipe < ApplicationRecord
   def self.categories
     ['Breakfast', 'Lunch', 'Dinner', 'Desserts', 'Soups', 'Salads', 'Sauces/Dips', 'Appetizers', 'Side Dishes', 'Drinks', 'Snacks']
   end
+
+  def self.difficulties
+    ['Beginner', 'Intermediate', 'Advanced']
+  end
 end
